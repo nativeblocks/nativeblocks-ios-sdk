@@ -1,0 +1,4 @@
+framework module Nativeblocks {
+  header "Nativeblocks-Swift.h"
+  requires objc
+}
