@@ -16,6 +16,6 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Nativeblocks",
-            path: "NativeblocksCore.xcframework")
+            path: "Nativeblocks.xcframework")
     ]
 )
