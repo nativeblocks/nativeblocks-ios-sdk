@@ -4,18 +4,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "NativeblocksCore",
+    name: "Nativeblocks",
     platforms: [
         .iOS(.v15)
     ],
     products: [
         .library(
-            name: "NativeblocksCore",
-            targets: ["NativeblocksCore"])
+            name: "Nativeblocks",
+            targets: ["Nativeblocks"])
     ],
     targets: [
         .binaryTarget(
-            name: "NativeblocksCore",
+            name: "Nativeblocks",
             path: "NativeblocksCore.xcframework")
     ]
 )
