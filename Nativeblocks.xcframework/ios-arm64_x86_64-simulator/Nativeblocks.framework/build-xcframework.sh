@@ -15,7 +15,6 @@ DEVICE_FRAMEWORK_PATH="${DEVICE_ARCHIVE_PATH}/Products/Library/Frameworks/${FRAM
 
 OUTPUT_DIR="${PWD}/"
 
-# Create the output directory if it doesn't exist
 mkdir -p "${OUTPUT_DIR}"
 
 echo "Creating simulator xcarchive... ######"

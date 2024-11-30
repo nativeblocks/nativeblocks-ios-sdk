@@ -1,15 +1,35 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
-// swift-module-flags: -target arm64-apple-ios17.2 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Nativeblocks
-// swift-module-flags-ignorable: -enable-bare-slash-regex
+// swift-compiler-version: Apple Swift version 6.0 effective-5.10 (swiftlang-6.0.0.9.10 clang-1600.0.26.2)
+// swift-module-flags: -target arm64-apple-ios15.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name Nativeblocks
+import Combine
+import CoreData
 import Foundation
+@_exported import Nativeblocks
 import Swift
 import SwiftUI
 import _Concurrency
 import _StringProcessing
 import _SwiftConcurrencyShims
+public protocol INativeAction {
+  func handle(actionProps: Nativeblocks.ActionProps)
+}
+public struct ActionProps {
+  public var listItemIndex: Swift.Int?
+  public var variables: [Swift.String : Nativeblocks.NativeVariableModel]?
+  public var onVariableChange: ((Nativeblocks.NativeVariableModel) -> Swift.Void)?
+  public var blocks: [Swift.String : Nativeblocks.NativeBlockModel]?
+  public var onChangeBlock: ((Nativeblocks.NativeBlockModel) -> Swift.Void)?
+  public var trigger: Nativeblocks.NativeActionTriggerModel?
+  public var onHandleNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
+  public var onHandleSuccessNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
+  public var onHandleFailureNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
+}
+@_hasMissingDesignatedInitializers public class NativeActionProvider {
+  @objc deinit
+}
+public typealias BlockIndex = Swift.Int
 public protocol INativeBlock {
-  func blockView(blockProps: Nativeblocks.BlockProps) -> any SwiftUI.View
+  func blockView(blockProps: Nativeblocks.BlockProps) -> any SwiftUICore.View
 }
 public struct BlockProps {
   public var listItemIndex: Swift.Int?
@@ -18,9 +38,61 @@ public struct BlockProps {
   public var actions: [Swift.String : [Nativeblocks.NativeActionModel]]?
   public var onHandleAction: ((Swift.Int, Nativeblocks.NativeActionModel?, Swift.String) -> Swift.Void)?
   public var block: Nativeblocks.NativeBlockModel?
-  public var onSubBlock: (([Swift.String : Nativeblocks.NativeBlockModel], Nativeblocks.NativeBlockSlotModel, Swift.Int) -> SwiftUI.AnyView)?
+  public var onSubBlock: (([Swift.String : Nativeblocks.NativeBlockModel], Nativeblocks.NativeBlockSlotModel, Swift.Int) -> SwiftUICore.AnyView)?
 }
-public func findWindowSizeClass(_ vertical: SwiftUI.UserInterfaceSizeClass?, _ horizontal: SwiftUI.UserInterfaceSizeClass?, _ prop: Nativeblocks.NativeBlockPropertyModel?) -> Swift.String?
+@_hasMissingDesignatedInitializers public class NativeBlockProvider {
+  @objc deinit
+}
+public protocol INativeLogger {
+  func log(eventName: Swift.String, parameters: [Swift.String : Swift.String])
+}
+@_hasMissingDesignatedInitializers public class NativeLoggerProvider {
+  @objc deinit
+}
+public protocol WandKit {
+  func setup(edition: Nativeblocks.NativeblocksEdition)
+  func destroy()
+}
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksFrame : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(route: Swift.String, routeArguments: [Swift.String : Swift.String], loading: @escaping () -> SwiftUICore.AnyView, error: @escaping (Swift.String) -> SwiftUICore.AnyView)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5FrameV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksLoading : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init()
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A7LoadingV4bodyQrvp", 0) __
+}
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksError : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(message: Swift.String)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
+    get
+  }
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5ErrorV4bodyQrvp", 0) __
+}
+public enum NativeblocksEdition {
+  case cloud(endpoint: Swift.String, apiKey: Swift.String, developmentMode: Swift.Bool)
+  case community(frameData: [Swift.String : Swift.String])
+}
+@_hasMissingDesignatedInitializers public class NativeblocksManager {
+  public static func initialize(edition: Nativeblocks.NativeblocksEdition)
+  public static func getInstance() -> Nativeblocks.NativeblocksManager
+  public func getScaffold(onSuccess: @escaping (Nativeblocks.NativeScaffoldModel) -> Swift.Void, onFailure: @escaping (Swift.String) -> Swift.Void) async
+  public func syncFrame(frameRoute: Swift.String) async
+  public func wandKit(_ wandKit: any Nativeblocks.WandKit...) -> Nativeblocks.NativeblocksManager
+  public func provideBlock(blockKeyType: Swift.String, block: any Nativeblocks.INativeBlock)
+  public func provideAction(actionKeyType: Swift.String, action: any Nativeblocks.INativeAction)
+  public func provideEventLogger(loggerType: Swift.String, logger: any Nativeblocks.INativeLogger)
+  public func destroy()
+  @objc deinit
+}
 public struct NativeActionModel : Swift.Hashable, Swift.Codable {
   public let id: Swift.String?
   public let key: Swift.String?
@@ -85,12 +157,6 @@ public enum NativeActionTriggerThen : Swift.String, Swift.Hashable, Swift.Codabl
     get
   }
 }
-public protocol INativeLogger {
-  func log(eventName: Swift.String, parameters: [Swift.String : Swift.String])
-}
-@_hasMissingDesignatedInitializers public class NativeLoggerProvider {
-  @objc deinit
-}
 public struct NativeBlockModel : Swift.Hashable, Swift.Codable {
   public var id: Swift.String?
   public var parentId: Swift.String?
@@ -147,20 +213,6 @@ public struct NativeBlockSlotModel : Swift.Hashable, Swift.Codable {
   }
   public init(from decoder: any Swift.Decoder) throws
 }
-public protocol INativeAction {
-  func handle(actionProps: Nativeblocks.ActionProps)
-}
-public struct ActionProps {
-  public var listItemIndex: Swift.Int?
-  public var variables: [Swift.String : Nativeblocks.NativeVariableModel]?
-  public var onVariableChange: ((Nativeblocks.NativeVariableModel) -> Swift.Void)?
-  public var blocks: [Swift.String : Nativeblocks.NativeBlockModel]?
-  public var onChangeBlock: ((Nativeblocks.NativeBlockModel) -> Swift.Void)?
-  public var trigger: Nativeblocks.NativeActionTriggerModel?
-  public var onHandleNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
-  public var onHandleSuccessNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
-  public var onHandleFailureNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
-}
 public struct NativeScaffoldModel {
   public let frames: [Nativeblocks.NativeFrameRouteModel]
 }
@@ -185,9 +237,6 @@ public enum FrameTypeModel : Swift.String {
     get
   }
 }
-@_hasMissingDesignatedInitializers public class NativeActionProvider {
-  @objc deinit
-}
 public struct NativeVariableModel : Swift.Hashable, Swift.Codable {
   public var key: Swift.String
   public var value: Swift.String
@@ -200,44 +249,17 @@ public struct NativeVariableModel : Swift.Hashable, Swift.Codable {
   }
   public init(from decoder: any Swift.Decoder) throws
 }
-public struct NativeblocksFrame : SwiftUI.View {
-  public init(route: Swift.String, loading: @escaping () -> SwiftUI.AnyView, error: @escaping (Swift.String) -> SwiftUI.AnyView)
-  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5FrameV4bodyQrvp", 0) __
+public func findWindowSizeClass(_ vertical: SwiftUICore.UserInterfaceSizeClass?, _ horizontal: SwiftUICore.UserInterfaceSizeClass?, _ prop: Nativeblocks.NativeBlockPropertyModel?) -> Swift.String?
+extension Swift.String {
+  public func toCGFloat() -> CoreFoundation.CGFloat?
 }
-public struct NativeblocksLoading : SwiftUI.View {
-  public init()
-  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A7LoadingV4bodyQrvp", 0) __
+extension SwiftUICore.Color {
+  public init?(hex: Swift.String)
 }
-public struct NativeblocksError : SwiftUI.View {
-  public init(message: Swift.String)
-  @_Concurrency.MainActor(unsafe) public var body: some SwiftUI.View {
-    get
-  }
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5ErrorV4bodyQrvp", 0) __
-}
-public enum NativeblocksEdition {
-  case cloud(endpoint: Swift.String, apiKey: Swift.String, developmentMode: Swift.Bool)
-}
-@_hasMissingDesignatedInitializers public class NativeblocksManager {
-  public static func initialize(edition: Nativeblocks.NativeblocksEdition)
-  public static func getInstance() -> Nativeblocks.NativeblocksManager
-  #if compiler(>=5.3) && $AsyncAwait
-  public func getScaffold(onSuccess: @escaping (Nativeblocks.NativeScaffoldModel) -> Swift.Void, onFailure: @escaping (Swift.String) -> Swift.Void) async
-  #endif
-  public func provideBlock(blockKeyType: Swift.String, block: any Nativeblocks.INativeBlock)
-  public func provideAction(actionKeyType: Swift.String, action: any Nativeblocks.INativeAction)
-  public func provideEventLogger(loggerType: Swift.String, logger: any Nativeblocks.INativeLogger)
-  @objc deinit
-}
-@_hasMissingDesignatedInitializers public class NativeBlockProvider {
-  @objc deinit
-}
+public func blockProvideEvent(blockProps: Nativeblocks.BlockProps, action: [Nativeblocks.NativeActionModel], eventType: Swift.String) -> (() -> Swift.Void)?
+extension Nativeblocks.NativeblocksFrame : Swift.Sendable {}
+extension Nativeblocks.NativeblocksLoading : Swift.Sendable {}
+extension Nativeblocks.NativeblocksError : Swift.Sendable {}
 extension Nativeblocks.NativeActionTriggerThen : Swift.RawRepresentable {}
 extension Nativeblocks.FrameTypeModel : Swift.Equatable {}
 extension Nativeblocks.FrameTypeModel : Swift.Hashable {}
