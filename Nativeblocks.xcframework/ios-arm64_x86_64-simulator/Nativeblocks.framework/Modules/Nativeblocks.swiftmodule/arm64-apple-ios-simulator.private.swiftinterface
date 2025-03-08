@@ -24,9 +24,12 @@ public struct ActionProps {
   public var onHandleSuccessNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
   public var onHandleFailureNextTrigger: ((Nativeblocks.NativeActionTriggerModel) -> Swift.Void)?
 }
-@_hasMissingDesignatedInitializers public class NativeActionProvider {
+@_hasMissingDesignatedInitializers public class NativeLoggerProvider {
   @objc deinit
 }
+public func blockProvideEvent(blockProps: Nativeblocks.BlockProps, action: [Nativeblocks.NativeActionModel], eventType: Swift.String) -> (() -> Swift.Void)?
+public func blockHasEvent(action: [Nativeblocks.NativeActionModel], eventType: Swift.String) -> Swift.Bool
+public func blockHandleEvent(blockProps: Nativeblocks.BlockProps, action: [Nativeblocks.NativeActionModel], eventType: Swift.String)
 public typealias BlockIndex = Swift.Int
 public protocol INativeBlock {
   func blockView(blockProps: Nativeblocks.BlockProps) -> any SwiftUICore.View
@@ -37,45 +40,28 @@ public struct BlockProps {
   public var onVariableChange: ((Nativeblocks.NativeVariableModel) -> Swift.Void)?
   public var actions: [Swift.String : [Nativeblocks.NativeActionModel]]?
   public var onHandleAction: ((Swift.Int, Nativeblocks.NativeActionModel?, Swift.String) -> Swift.Void)?
+  public var onLocalize: ((Swift.String) -> Swift.String?)?
   public var block: Nativeblocks.NativeBlockModel?
+  public var hierarchy: [Nativeblocks.NativeBlockHierarchyModel]?
   public var onSubBlock: (([Swift.String : Nativeblocks.NativeBlockModel], Nativeblocks.NativeBlockSlotModel, Swift.Int) -> SwiftUICore.AnyView)?
 }
+@_hasMissingDesignatedInitializers public class NativeActionProvider {
+  @objc deinit
+}
+public func findWindowSizeClass(_ vertical: SwiftUICore.UserInterfaceSizeClass?, _ horizontal: SwiftUICore.UserInterfaceSizeClass?, _ prop: Nativeblocks.NativeBlockPropertyModel?) -> Swift.String?
+extension Swift.String {
+  public func toCGFloat() -> CoreFoundation.CGFloat?
+}
+extension SwiftUICore.Color {
+  public init?(hex: Swift.String)
+}
+public func blockHasSlot(blocks: [Swift.String : Nativeblocks.NativeBlockModel], slot: Swift.String) -> Swift.Bool
+public func blockProvideSlot(blockProps: Nativeblocks.BlockProps, slots: [Swift.String : Nativeblocks.NativeBlockSlotModel], slotType: Swift.String) -> Nativeblocks.NativeBlockSlotModel?
 @_hasMissingDesignatedInitializers public class NativeBlockProvider {
   @objc deinit
 }
-public protocol INativeLogger {
-  func log(eventName: Swift.String, parameters: [Swift.String : Swift.String])
-}
-@_hasMissingDesignatedInitializers public class NativeLoggerProvider {
+@_hasMissingDesignatedInitializers public class NativeTypeProvider {
   @objc deinit
-}
-public protocol WandKit {
-  func setup(edition: Nativeblocks.NativeblocksEdition)
-  func destroy()
-}
-@_Concurrency.MainActor @preconcurrency public struct NativeblocksFrame : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(route: Swift.String, routeArguments: [Swift.String : Swift.String], loading: @escaping () -> SwiftUICore.AnyView, error: @escaping (Swift.String) -> SwiftUICore.AnyView)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5FrameV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct NativeblocksLoading : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init()
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A7LoadingV4bodyQrvp", 0) __
-}
-@_Concurrency.MainActor @preconcurrency public struct NativeblocksError : SwiftUICore.View {
-  @_Concurrency.MainActor @preconcurrency public init(message: Swift.String)
-  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
-    get
-  }
-  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
-  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5ErrorV4bodyQrvp", 0) __
 }
 public enum NativeblocksEdition {
   case cloud(endpoint: Swift.String, apiKey: Swift.String, developmentMode: Swift.Bool)
@@ -90,8 +76,128 @@ public enum NativeblocksEdition {
   public func provideBlock(blockKeyType: Swift.String, block: any Nativeblocks.INativeBlock)
   public func provideAction(actionKeyType: Swift.String, action: any Nativeblocks.INativeAction)
   public func provideEventLogger(loggerType: Swift.String, logger: any Nativeblocks.INativeLogger)
+  public func provideTypeConverter<T>(_ type: T.Type, converter: Nativeblocks.INativeType<T>)
+  public func getTypeConverter<T>(_ type: T.Type) -> Nativeblocks.INativeType<T>
+  public func clearAllFrames() async -> Nativeblocks.NativeblocksManager
+  public func clearFrame(frameRoute: Swift.String) async -> Nativeblocks.NativeblocksManager
+  public func setLocalization(languageCode: Swift.String) -> Nativeblocks.NativeblocksManager
   public func destroy()
   @objc deinit
+}
+public protocol INativeLogger {
+  func log(eventName: Swift.String, parameters: [Swift.String : Swift.String])
+}
+public struct NativeVariableModel : Swift.Hashable, Swift.Codable {
+  public var key: Swift.String
+  public var value: Swift.String
+  public var type: Swift.String
+  public static func == (lhs: Nativeblocks.NativeVariableModel, rhs: Nativeblocks.NativeVariableModel) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public protocol WandKit {
+  func setup(edition: Nativeblocks.NativeblocksEdition)
+  func destroy()
+}
+public class NativeJsonPath {
+  public init()
+  public func query(jsonString: Swift.String?, query: Swift.String?) -> Any?
+  @objc deinit
+}
+extension Swift.String {
+  public func isJsonPath() -> Swift.Bool
+}
+public struct NativeScaffoldModel {
+  public let frames: [Nativeblocks.NativeFrameRouteModel]
+}
+public struct NativeFrameRouteModel {
+  public let id: Swift.String?
+  public let name: Swift.String?
+  public let type: Nativeblocks.FrameTypeModel?
+  public let route: Swift.String?
+  public let isStarter: Swift.Bool?
+  public let routeArguments: [Nativeblocks.NativeRouteArgumentsModel]?
+}
+public struct NativeRouteArgumentsModel {
+  public let name: Swift.String?
+}
+public enum FrameTypeModel : Swift.String {
+  case frame
+  case bottomSheet
+  case dialog
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+open class INativeType<T> {
+  public init()
+  open func toString(_ input: T?) -> Swift.String
+  open func fromString(_ input: Swift.String?) -> T
+  @objc deinit
+}
+public struct NativeBlockModel : Swift.Hashable, Swift.Codable {
+  public var id: Swift.String?
+  public var parentId: Swift.String?
+  public var slot: Swift.String?
+  public var keyType: Swift.String?
+  public var key: Swift.String?
+  public var visibility: Swift.String?
+  public var position: Swift.Int?
+  public var properties: [Swift.String : Nativeblocks.NativeBlockPropertyModel]?
+  public var data: [Swift.String : Nativeblocks.NativeBlockDataModel]?
+  public var slots: [Swift.String : Nativeblocks.NativeBlockSlotModel]?
+  public var subBlocks: [Swift.String : Nativeblocks.NativeBlockModel]?
+  public static func == (lhs: Nativeblocks.NativeBlockModel, rhs: Nativeblocks.NativeBlockModel) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NativeBlockPropertyModel : Swift.Hashable, Swift.Codable {
+  public var key: Swift.String
+  public var valueMobile: Swift.String
+  public var valueTablet: Swift.String
+  public var valueDesktop: Swift.String
+  public var type: Swift.String
+  public static func == (lhs: Nativeblocks.NativeBlockPropertyModel, rhs: Nativeblocks.NativeBlockPropertyModel) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NativeBlockDataModel : Swift.Hashable, Swift.Codable {
+  public var key: Swift.String
+  public var value: Swift.String
+  public var type: Swift.String
+  public static func == (lhs: Nativeblocks.NativeBlockDataModel, rhs: Nativeblocks.NativeBlockDataModel) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NativeBlockSlotModel : Swift.Hashable, Swift.Codable {
+  public var slot: Swift.String
+  public static func == (lhs: Nativeblocks.NativeBlockSlotModel, rhs: Nativeblocks.NativeBlockSlotModel) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public func encode(to encoder: any Swift.Encoder) throws
+  public var hashValue: Swift.Int {
+    get
+  }
+  public init(from decoder: any Swift.Decoder) throws
+}
+public struct NativeBlockHierarchyModel {
 }
 public struct NativeActionModel : Swift.Hashable, Swift.Codable {
   public let id: Swift.String?
@@ -157,110 +263,49 @@ public enum NativeActionTriggerThen : Swift.String, Swift.Hashable, Swift.Codabl
     get
   }
 }
-public struct NativeBlockModel : Swift.Hashable, Swift.Codable {
-  public var id: Swift.String?
-  public var parentId: Swift.String?
-  public var slot: Swift.String?
-  public var keyType: Swift.String?
-  public var key: Swift.String?
-  public var visibility: Swift.String?
-  public var position: Swift.Int?
-  public var properties: [Swift.String : Nativeblocks.NativeBlockPropertyModel]?
-  public var data: [Swift.String : Nativeblocks.NativeBlockDataModel]?
-  public var slots: [Swift.String : Nativeblocks.NativeBlockSlotModel]?
-  public var subBlocks: [Swift.String : Nativeblocks.NativeBlockModel]?
-  public static func == (lhs: Nativeblocks.NativeBlockModel, rhs: Nativeblocks.NativeBlockModel) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public var hashValue: Swift.Int {
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksFrame : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(route: Swift.String, routeArguments: [Swift.String : Swift.String], loading: @escaping () -> SwiftUICore.AnyView, error: @escaping (Swift.String) -> SwiftUICore.AnyView)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
     get
   }
-  public init(from decoder: any Swift.Decoder) throws
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5FrameV4bodyQrvp", 0) __
 }
-public struct NativeBlockPropertyModel : Swift.Hashable, Swift.Codable {
-  public var key: Swift.String
-  public var valueMobile: Swift.String
-  public var valueTablet: Swift.String
-  public var valueDesktop: Swift.String
-  public var type: Swift.String
-  public static func == (lhs: Nativeblocks.NativeBlockPropertyModel, rhs: Nativeblocks.NativeBlockPropertyModel) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public var hashValue: Swift.Int {
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksLoading : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init()
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
     get
   }
-  public init(from decoder: any Swift.Decoder) throws
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A7LoadingV4bodyQrvp", 0) __
 }
-public struct NativeBlockDataModel : Swift.Hashable, Swift.Codable {
-  public var key: Swift.String
-  public var value: Swift.String
-  public var type: Swift.String
-  public static func == (lhs: Nativeblocks.NativeBlockDataModel, rhs: Nativeblocks.NativeBlockDataModel) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public var hashValue: Swift.Int {
+@_Concurrency.MainActor @preconcurrency public struct NativeblocksError : SwiftUICore.View {
+  @_Concurrency.MainActor @preconcurrency public init(message: Swift.String)
+  @_Concurrency.MainActor @preconcurrency public var body: some SwiftUICore.View {
     get
   }
-  public init(from decoder: any Swift.Decoder) throws
+  @available(iOS 13.0, tvOS 13.0, watchOS 6.0, macOS 10.15, *)
+  public typealias Body = @_opaqueReturnTypeOf("$s12Nativeblocks0A5ErrorV4bodyQrvp", 0) __
 }
-public struct NativeBlockSlotModel : Swift.Hashable, Swift.Codable {
-  public var slot: Swift.String
-  public static func == (lhs: Nativeblocks.NativeBlockSlotModel, rhs: Nativeblocks.NativeBlockSlotModel) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public var hashValue: Swift.Int {
-    get
-  }
-  public init(from decoder: any Swift.Decoder) throws
-}
-public struct NativeScaffoldModel {
-  public let frames: [Nativeblocks.NativeFrameRouteModel]
-}
-public struct NativeFrameRouteModel {
-  public let id: Swift.String?
-  public let name: Swift.String?
-  public let type: Nativeblocks.FrameTypeModel?
-  public let route: Swift.String?
-  public let isStarter: Swift.Bool?
-  public let routeArguments: [Nativeblocks.NativeRouteArgumentsModel]?
-}
-public struct NativeRouteArgumentsModel {
-  public let name: Swift.String?
-}
-public enum FrameTypeModel : Swift.String {
-  case frame
-  case bottomSheet
-  case dialog
-  public init?(rawValue: Swift.String)
-  public typealias RawValue = Swift.String
-  public var rawValue: Swift.String {
-    get
-  }
-}
-public struct NativeVariableModel : Swift.Hashable, Swift.Codable {
-  public var key: Swift.String
-  public var value: Swift.String
-  public var type: Swift.String
-  public static func == (lhs: Nativeblocks.NativeVariableModel, rhs: Nativeblocks.NativeVariableModel) -> Swift.Bool
-  public func hash(into hasher: inout Swift.Hasher)
-  public func encode(to encoder: any Swift.Encoder) throws
-  public var hashValue: Swift.Int {
-    get
-  }
-  public init(from decoder: any Swift.Decoder) throws
-}
-public func findWindowSizeClass(_ vertical: SwiftUICore.UserInterfaceSizeClass?, _ horizontal: SwiftUICore.UserInterfaceSizeClass?, _ prop: Nativeblocks.NativeBlockPropertyModel?) -> Swift.String?
 extension Swift.String {
-  public func toCGFloat() -> CoreFoundation.CGFloat?
+  public func evaluateMixConditionOperator(type: Swift.String) -> Swift.String
 }
-extension SwiftUICore.Color {
-  public init?(hex: Swift.String)
+extension Swift.String {
+  public func parseWithJsonPath(variables: [Swift.String : Nativeblocks.NativeVariableModel]?, hierarchy: [Nativeblocks.NativeBlockHierarchyModel]?) -> Swift.String
+  public func parseWithJsonPath(variables: [Swift.String : Nativeblocks.NativeVariableModel]?, index: Swift.Int?) -> Swift.String
+  public func extractKeyVariables(key: Swift.String) -> [(Swift.String, Swift.String?)]
+  public func getVariableValue(key: Swift.String, replacement: Swift.String) -> Swift.String
+  public func extractKeyVariables() -> [(Swift.String, Swift.String?)]
+  public func replaceNativeVariable(_ variables: [Swift.String : Nativeblocks.NativeVariableModel]?) -> Swift.String
 }
-public func blockProvideEvent(blockProps: Nativeblocks.BlockProps, action: [Nativeblocks.NativeActionModel], eventType: Swift.String) -> (() -> Swift.Void)?
-extension Nativeblocks.NativeblocksFrame : Swift.Sendable {}
-extension Nativeblocks.NativeblocksLoading : Swift.Sendable {}
-extension Nativeblocks.NativeblocksError : Swift.Sendable {}
-extension Nativeblocks.NativeActionTriggerThen : Swift.RawRepresentable {}
+public func blockHandleVariableValue(blockProps: Nativeblocks.BlockProps, variable: Nativeblocks.NativeVariableModel?) -> Swift.String?
+public func blockHandleVariableValue(blockProps: Nativeblocks.BlockProps, value: Swift.String?) -> Swift.String?
+public func actionHandleVariableValue(actionProps: Nativeblocks.ActionProps, variable: Nativeblocks.NativeVariableModel?) -> Swift.String?
+public func actionHandleVariableValue(actionProps: Nativeblocks.ActionProps, value: Swift.String?) -> Swift.String?
 extension Nativeblocks.FrameTypeModel : Swift.Equatable {}
 extension Nativeblocks.FrameTypeModel : Swift.Hashable {}
 extension Nativeblocks.FrameTypeModel : Swift.RawRepresentable {}
+extension Nativeblocks.NativeActionTriggerThen : Swift.RawRepresentable {}
+extension Nativeblocks.NativeblocksFrame : Swift.Sendable {}
+extension Nativeblocks.NativeblocksLoading : Swift.Sendable {}
+extension Nativeblocks.NativeblocksError : Swift.Sendable {}
