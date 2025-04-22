@@ -6,7 +6,8 @@ import PackageDescription
 let package = Package(
     name: "Nativeblocks",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v15),
+        .macOS(.v13)
     ],
     products: [
         .library(
@@ -16,6 +17,6 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Nativeblocks",
-            path: "Nativeblocks.xcframework")
+            path: "./Nativeblocks.xcframework")
     ]
 )

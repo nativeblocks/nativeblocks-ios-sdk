@@ -1,46 +1,94 @@
 #!/bin/bash
 
-SCHEME_NAME="Nativeblocks"
+set -e
+
+##############################
+# Configuration
+##############################
+
 FRAMEWORK_NAME="Nativeblocks"
+SCHEME_NAME="Nativeblocks"
+PROJECT_NAME="${SCHEME_NAME}.xcodeproj"
+OUTPUT_DIR="${PWD}/Build"
+XCFRAMEWORK_OUTPUT="${OUTPUT_DIR}/${FRAMEWORK_NAME}.xcframework"
 
-rm -rf "${SIMULATOR_ARCHIVE_PATH}"
-rm -rf "${DEVICE_ARCHIVE_PATH}"
-rm -rf "${OUTPUT_DIR}${FRAMEWORK_NAME}.xcframework"
+IOS_SIMULATOR_ARCHIVE="${OUTPUT_DIR}/${FRAMEWORK_NAME}-iphonesimulator.xcarchive"
+IOS_DEVICE_ARCHIVE="${OUTPUT_DIR}/${FRAMEWORK_NAME}-iphoneos.xcarchive"
+MACOS_ARCHIVE="${OUTPUT_DIR}/${FRAMEWORK_NAME}-macos.xcarchive"
 
-SIMULATOR_ARCHIVE_PATH="${PWD}/${FRAMEWORK_NAME}-iphonesimulator.xcarchive"
-DEVICE_ARCHIVE_PATH="${PWD}/${FRAMEWORK_NAME}-iphoneos.xcarchive"
+IOS_SIMULATOR_FRAMEWORK="${IOS_SIMULATOR_ARCHIVE}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework"
+IOS_DEVICE_FRAMEWORK="${IOS_DEVICE_ARCHIVE}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework"
+MACOS_FRAMEWORK="${MACOS_ARCHIVE}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework"
 
-SIMULATOR_FRAMEWORK_PATH="${SIMULATOR_ARCHIVE_PATH}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework"
-DEVICE_FRAMEWORK_PATH="${DEVICE_ARCHIVE_PATH}/Products/Library/Frameworks/${FRAMEWORK_NAME}.framework"
+##############################
+# Clean previous builds
+##############################
 
-OUTPUT_DIR="${PWD}/"
-
+echo "🧹 Cleaning previous builds..."
+rm -rf "${OUTPUT_DIR}"
 mkdir -p "${OUTPUT_DIR}"
 
-echo "Creating simulator xcarchive... ######"
+##############################
+# Archive for iOS Simulator
+##############################
+
+echo "📦 Archiving for iOS Simulator..."
 xcodebuild archive \
-  ONLY_ACTIVE_ARCH=NO \
-  -scheme ${SCHEME_NAME} \
-  -project "${SCHEME_NAME}.xcodeproj" \
-  -archivePath ${SIMULATOR_ARCHIVE_PATH} \
+  -project "${PROJECT_NAME}" \
+  -scheme "${SCHEME_NAME}" \
   -sdk iphonesimulator \
+  -archivePath "${IOS_SIMULATOR_ARCHIVE}" \
+  -destination 'generic/platform=iOS Simulator' \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-  SKIP_INSTALL=NO
+  SKIP_INSTALL=NO \
+  ONLY_ACTIVE_ARCH=NO
 
-echo "Creating device xcarchive...######"
+##############################
+# Archive for iOS Device
+##############################
+
+echo "📦 Archiving for iOS Device..."
 xcodebuild archive \
-  -scheme ${SCHEME_NAME} \
-  -project "${SCHEME_NAME}.xcodeproj" \
-  -archivePath ${DEVICE_ARCHIVE_PATH} \
+  -project "${PROJECT_NAME}" \
+  -scheme "${SCHEME_NAME}" \
   -sdk iphoneos \
+  -archivePath "${IOS_DEVICE_ARCHIVE}" \
+  -destination 'generic/platform=iOS' \
   BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
-  SKIP_INSTALL=NO
+  SKIP_INSTALL=NO \
+  ONLY_ACTIVE_ARCH=NO
 
-echo "Creating xcframework...######"
+##############################
+# Archive for macOS
+##############################
+
+echo "📦 Archiving for macOS..."
+xcodebuild archive \
+  -project "${PROJECT_NAME}" \
+  -scheme "${SCHEME_NAME}" \
+  -sdk macosx \
+  -archivePath "${MACOS_ARCHIVE}" \
+  -destination 'generic/platform=macOS' \
+  BUILD_LIBRARY_FOR_DISTRIBUTION=YES \
+  SKIP_INSTALL=NO \
+  ONLY_ACTIVE_ARCH=NO
+
+##############################
+# Create XCFramework
+##############################
+
+echo "🛠 Creating XCFramework..."
 xcodebuild -create-xcframework \
-  -framework ${DEVICE_FRAMEWORK_PATH} \
-  -framework ${SIMULATOR_FRAMEWORK_PATH} \
-  -output ${OUTPUT_DIR}/${FRAMEWORK_NAME}.xcframework
+  -framework "${IOS_DEVICE_FRAMEWORK}" \
+  -framework "${IOS_SIMULATOR_FRAMEWORK}" \
+  -framework "${MACOS_FRAMEWORK}" \
+  -output "${XCFRAMEWORK_OUTPUT}"
 
-rm -rf "${SIMULATOR_ARCHIVE_PATH}"
-rm -rf "${DEVICE_ARCHIVE_PATH}"
+##############################
+# Cleanup archives
+##############################
+
+echo "🧹 Cleaning up archives..."
+rm -rf "${IOS_SIMULATOR_ARCHIVE}" "${IOS_DEVICE_ARCHIVE}" "${MACOS_ARCHIVE}"
+
+echo "✅ XCFramework successfully created at: ${XCFRAMEWORK_OUTPUT}"

@@ -4,61 +4,61 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Headers/Nativeblocks.h</key>
+		<key>Headers/Nativeblocks-Swift.h</key>
 		<data>
-		ausSqm6IgRjRvdnrjEeA7D+E3rU=
+		KDwiVDCIYapGSafPKZvy5JB9ZOs=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		q2svdrb+gajl+vCKP9LYkanAmB4=
+		a7XPLv8m0Vqn4iH9H4+ONwSgFWo=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		eiEx9MgMu9haCA3YTzXzBncUPoE=
+		oYvcrcKXMY6Qy/eeVo21ysD/rU4=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		W002qQ7S4wd1LRFhgWdIlrr9oDs=
+		8U8xQA3MPX30G+KEyl1UV3ZxC+E=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		ITGryfodelFSJM+b9LJDHM2QtrU=
+		eLlKkdyYZuZ9dsBzNrGOfLrnkd4=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		W002qQ7S4wd1LRFhgWdIlrr9oDs=
+		8U8xQA3MPX30G+KEyl1UV3ZxC+E=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		Sn1sg9NS53Nv1EoaWeNvv9jHz6A=
+		IV9mTuHRxVflaofNEHDK0gmptdU=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		eiEx9MgMu9haCA3YTzXzBncUPoE=
+		oYvcrcKXMY6Qy/eeVo21ysD/rU4=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		iuKfCA6O41zwDnmnKaA3dPm2VRk=
+		no/PdhjpqS1n2Hmga2EVsrkUOu0=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		estWLFqp/6A3lpH4RmJttnfMj68=
+		fOsVl4xrE4f+6Q79MDwMmsLL+zM=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		iuKfCA6O41zwDnmnKaA3dPm2VRk=
+		no/PdhjpqS1n2Hmga2EVsrkUOu0=
 		</data>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		FbTanncMGElwQiECt1P5YSLog6Q=
+		GPkJ/lkjOB431LQW53mf4xc8gTk=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
-		6kDQD0wjGtBgP8Jmsk5XX5QchIk=
+		UyYOHNhyTLlGWfGSuZvGc3FTGQ0=
 		</data>
 		<key>NativeblocksDatabase.momd/NativeblocksDatabase.mom</key>
 		<data>
-		QzZDzClUBzO3OYiWtcdNPXceJu0=
+		nyL7OppXF964JeJx8rZMnZpWX/4=
 		</data>
 		<key>NativeblocksDatabase.momd/VersionInfo.plist</key>
 		<data>
@@ -66,100 +66,100 @@
 		</data>
 		<key>build-xcframework.sh</key>
 		<data>
-		g/zIIOp1drCzx8NJ/YgnHGbH278=
+		Z6dSYiXRTU5Nl30+oT+Nwe9KvME=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Headers/Nativeblocks.h</key>
+		<key>Headers/Nativeblocks-Swift.h</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			W73b6psjx4PQT+kB/oKRDuA/KFORbis06v4d3R+up1g=
+			CdvmqGWRDZD+9XPIw8T/pAIKRC/AXbvNVuj/zTSn/qs=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uWLL469teSUGvRvAJEyXagCENmtWLk45LzJTSuL7oe8=
+			NuhzZThckdiiqvo89CouVo4pqymUCwiY/PDnLsjA70c=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WCpllmbcTETyVwlQWVjTqtkwS3++oojiqoEj2URYx6c=
+			zXgJy4NxmhO+cFS3r8rlzGyXodQ2IypX7GVqj9rC1NU=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8PEhF7m4XXH2jkQd5CP7TzDlIO0J/Nywkf7MWeeE9gM=
+			RyKPyVXFGh13LrNGWJdj41RqByGhpj79ZF1AWUGw/+o=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WCpllmbcTETyVwlQWVjTqtkwS3++oojiqoEj2URYx6c=
+			zXgJy4NxmhO+cFS3r8rlzGyXodQ2IypX7GVqj9rC1NU=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0HDYt0F1pKKK7RVSo8pIjVdyKrvoCtI5CE+uqJfxm1E=
+			DqgPJT6gnd8cw4eSnsjVmqp3Ran2Xo8+jvpuAobI8ag=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uWLL469teSUGvRvAJEyXagCENmtWLk45LzJTSuL7oe8=
+			NuhzZThckdiiqvo89CouVo4pqymUCwiY/PDnLsjA70c=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YeAVbj/77QEJx0KE7sgUU4nO1dL0PFcAIHcfnwB3Lyg=
+			ygkJuaEN3mwT9Hs6h4FdOLX6xKOeIugnJOYvX+wZHm0=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IWCDTSNE9qD7Crl47iBvFXsk1Dj7ybd5trwak7u4qE4=
+			8ex0zN7peyFkDnRBJJvbqNxKUpZGw/X6yKfiOm5h7dI=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YeAVbj/77QEJx0KE7sgUU4nO1dL0PFcAIHcfnwB3Lyg=
+			ygkJuaEN3mwT9Hs6h4FdOLX6xKOeIugnJOYvX+wZHm0=
 			</data>
 		</dict>
 		<key>Modules/Nativeblocks.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RyRvliwje8S7BcoyQGRZy/u9vgdxcSC76SVbfzg7xRQ=
+			GCxOaWYRzITPdssfZAj6l17L3niMoneeK+xm8S0YBZQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BUWUVYe0uBFu+haqF/Z7B5Uo3lMkT+WeZQhzgDXMFg4=
+			293JoldSH6aSBLO5b//3r23m5Z5whq5/c9iGERpTUqw=
 			</data>
 		</dict>
 		<key>NativeblocksDatabase.momd/NativeblocksDatabase.mom</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mNE7uZJ1KPshWlCvHBe/vfX3HS+0gLPK+28q8gw1szM=
+			SewncODwBiI34py5/LjPcBuoPsYFwXWgygdX8A4/BdY=
 			</data>
 		</dict>
 		<key>NativeblocksDatabase.momd/VersionInfo.plist</key>
@@ -173,7 +173,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			c84Br4tS95RWC1R7/UgQSVvc8W0eBai7V3kYq/4nvos=
+			c7GjA4Tvvd3iGV+G41HTLcCjtLR5u5oCaDAEhulB6BU=
 			</data>
 		</dict>
 	</dict>
