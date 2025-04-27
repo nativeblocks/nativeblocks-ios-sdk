@@ -1,6 +1,4 @@
 framework module Nativeblocks {
-  umbrella header "Nativeblocks.h"
-  export *
-
-  module * { export * }
+  header "Nativeblocks-Swift.h"
+  requires objc
 }
