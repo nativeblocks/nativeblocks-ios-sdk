@@ -5,17 +5,22 @@ import PackageDescription
 
 let package = Package(
     name: "Nativeblocks",
-    platforms: [
-        .iOS(.v15)
-    ],
+    platforms: [.macOS(.v13), .iOS(.v15)],
     products: [
         .library(
             name: "Nativeblocks",
-            targets: ["Nativeblocks"])
+            targets: ["NativeblocksPrivate"]
+        )
     ],
     targets: [
         .binaryTarget(
             name: "Nativeblocks",
-            path: "Nativeblocks.xcframework")
+            url: "TODO",
+            checksum: "TODO"
+        ),
+        .target( 
+            name: "NativeblocksPrivate",
+            path: "./Sources/Empty"
+        )
     ]
 )
