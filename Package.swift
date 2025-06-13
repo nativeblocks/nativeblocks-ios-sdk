@@ -10,8 +10,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "Nativeblocks",
-            url: "https://github.com/nativeblocks/nativeblocks-ios-sdk/releases/download/1.3.2/Nativeblocks.xcframework.zip",
-            checksum: "42dbd6226c1128f2e1d383a1cf4fe054e0d3411cb055d309e13f2efae0a0092c"
+            url: "https://github.com/nativeblocks/nativeblocks-ios-sdk/releases/download/1.3.3/Nativeblocks.xcframework.zip",
+            checksum: "311d3d62617d8cb047a5cc74573dba950b73b2e63657314ac6b0bd4b9205fd95"
         )
     ]
 )
