@@ -7,7 +7,7 @@ import SwiftUI
 @main
 struct SampleApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    let NATIVEBLOCKS_API_ENDPOINT = "https://api.nativeblocks.io/graphql"
+    let NATIVEBLOCKS_API_ENDPOINT = "https://api.nativeblocks.io/gateway/init"
     let NATIVEBLOCKS_API_KEY = ""
 
     init() {
